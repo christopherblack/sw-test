@@ -1,5 +1,5 @@
-<template>
-
+<template lang="pug">
+  b-container(fluid)
 </template>
 
 <script>
