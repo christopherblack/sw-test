@@ -31,7 +31,7 @@ export default new Vuex.Store({
   getters: {
     getSingleCharacter: state => id => state.charactersData.filter(character => character.id === id),
     getPaginationSetting: state => key => state.pagination[key],
-    getPaginationSettins: state => state.pagination
+    getPaginationSettings: state => state.pagination
   }
 
 })
