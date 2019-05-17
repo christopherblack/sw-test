@@ -25,7 +25,7 @@ export default new Vuex.Store({
       commit('SET_CHARACTERS', characters.map((character, index) => ({ ...character, ...{ id: index } })))
     },
     setPagination ({ commit }, paginationSettings) {
-      commit('SET_CHARACTERS', paginationSettings)
+      commit('SET_PAGINATION', paginationSettings)
     }
   },
   getters: {
