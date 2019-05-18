@@ -1,7 +1,10 @@
 .home-page {
+  .ships {
+    margin-left: 10px;
+  }
   .spinner-wrapper {
     &.min-heigth {
-      min-height: 600px;
+      min-height: 200px;
     }
   }
 }

@@ -6,16 +6,27 @@
     padding: 0 20px 20px 0;
   }
   .starships-loader {
-    margin: 5px;
+    margin: 10px;
   }
   .starships {
     list-style: none;
-    .name {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-    .model {
-      font-size: 0.7em;
+    //list-style-image: url(../../public/star-wars.svg);
+    li {
+      margin: 10px 0;
+      &:before {
+        content: '';
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        background-image: url(../../public/star-wars.svg);
+      }
+      .name {
+        font-weight: bold;
+        margin: 0 10px;
+      }
+      .model {
+        font-size: 0.7em;
+      }
     }
   }
 }

@@ -4,9 +4,6 @@
       b-col
         h1 Star Wars characters list
     b-row
-      b-col.text-center(v-if="characters.length === 0")
-        .spinner-wrapper.min-heigth
-          b-spinner
       b-card(
         v-for="(character, index) in characters"
         :key="character.id"
@@ -22,8 +19,15 @@
           :width="240"
           :height="240"
         )
-        b-card-text Добавлен {{character.created | formatDate}}
+        b-card-text
+          span {{character.created | formatDate}}
+          span.ships
+            b-badge(v-if="character.starships.length") Кораблей: {{ character.starships.length }}
         b-button(:to="`/details/${character.id}`") Подробнее
+    b-row
+      b-col.text-center(v-if="isLoading")
+        .spinner-wrapper.min-heigth
+          b-spinner
 </template>
 
 <script>
@@ -33,7 +37,7 @@ export default {
   name: 'Home',
   components: { ImageLoader },
   computed: {
-    ...mapGetters({ characters: 'getCharacters' })
+    ...mapGetters({ characters: 'getCharacters', isLoading: 'isCharactersDataSyncing' })
   }
 }
 </script>
