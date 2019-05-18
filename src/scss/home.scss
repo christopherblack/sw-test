@@ -1,3 +1,7 @@
 .home-page {
-
+  .spinner-wrapper {
+    &.min-heigth {
+      min-height: 600px;
+    }
+  }
 }

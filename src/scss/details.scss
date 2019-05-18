@@ -1,0 +1,21 @@
+.details-page {
+  h1 {
+    margin: 20px 0;
+  }
+  .img {
+    padding: 0 20px 20px 0;
+  }
+  .starships-loader {
+    margin: 5px;
+  }
+  .starships {
+    list-style: none;
+    .name {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .model {
+      font-size: 0.7em;
+    }
+  }
+}
