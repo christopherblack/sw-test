@@ -22,7 +22,7 @@
           h4 Корабли персонажа
             b-spinner.starships-loader(v-if="data.starships.length > 0 && !data.starshipsData" small)
             ul.starships(v-else)
-              li(v-for="starship in data.starshipsData")
+              li.icon.icon-starship(v-for="starship in data.starshipsData")
                 span.name {{ starship.name }}
                 span.model
                   b-badge {{ starship.model }}
@@ -42,26 +42,7 @@ export default {
     }
   },
   computed: {
-    data () { return this.$store.getters.getSingleCharacter(this.$route.params.id) }
-  },
-  created () {
-    this.$store.dispatch('syncStarshipsForCharacter', this.$route.params.id)
-    // this.data.starships.forEach((url, index) => {
-    //   this.starships[index] = this.getData(url)
-    //   // this.$axios.get(url)
-    //   //   .then(response => {
-    //   //     this.starships.push(response.data)
-    //   //   })
-    //   //   .catch(error => {
-    //   //     console.log(error)
-    //   //   })
-    // })
-  },
-  methods: {
-    getData: async function (url) {
-      const response = await this.$axios.get(url).data
-      return response
-    }
+    data () { return this.$store.getters.getSingleCharacter(this.$route.params.name) }
   }
 }
 </script>

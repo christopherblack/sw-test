@@ -4,43 +4,44 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-// function getData (url, onLoad) {
-//   axios.get(url)
-//     .then(response => {
-//       onLoad(response)
-//     })
-// }
-
 export default new Vuex.Store({
   state: {
     charactersData: [],
     charactersDataSyncing: true,
+    charactersDataSyncingErrors: [],
     pagination: {
-      currentPage: 0,
+      currentPage: 1,
       perPage: 20,
       totalRecords: 0
     }
   },
   mutations: {
     SET_CHARACTERS: (state, characters) => {
-      state.charactersData.push(...characters.map((character, index) => ({ ...character, ...{ id: index + state.charactersData.length } })))
+      state.charactersData.push(...characters)
     },
     SET_PAGINATION: (state, paginationSetting) => {
       state.pagination = { ...state.pagination, ...paginationSetting }
     },
-    ADD_STARSHIP: (state, { starships, index }) => {
-      if (!state.charactersData[index].starshipsData) {
-        state.charactersData[index].starshipsData = []
-      }
-      state.charactersData[index].starshipsData.push(starships)
+    ADD_STARSHIP: (state, { starship, name }) => {
+      state.charactersData.forEach((character) => {
+        if (character.name === name) {
+          if (!character.starshipsData) {
+            character.starshipsData = []
+          }
+          character.starshipsData.push(starship)
+        }
+      })
     },
     SET_LOADING_STATE: (state, isLoading) => {
       state.charactersDataSyncing = isLoading
+    },
+    SET_SYNC_ERROR: (state, error) => {
+      state.charactersDataSyncingErrors.push(error)
     }
   },
   actions: {
     setCharacters ({ commit }, characters) {
-      commit('SET_CHARACTERS', characters.map((character, index) => ({ ...character, ...{ id: index } })))
+      commit('SET_CHARACTERS', characters)
     },
     setPagination ({ commit }, paginationSettings) {
       commit('SET_PAGINATION', paginationSettings)
@@ -49,16 +50,16 @@ export default new Vuex.Store({
       const store = this
       axios.get(url).then(response => {
         commit('SET_CHARACTERS', response.data.results)
-        // TODO: Fix starships id mashup
+        commit('SET_PAGINATION', { totalRecords: response.data.count })
         response.data.results.forEach((character, index) => {
           if (character.starships.length > 0) {
-            character.starshipsData = []
-            character.starships.forEach(url => {
-              axios.get(url)
-                .then(response => {
-                  character.starshipsData.push(response.data)
-                  commit('ADD_STARSHIP', { starships: response.data, index: index })
-                })
+            character.starships.forEach((url) => {
+              if (url) {
+                axios.get(url)
+                  .then(response => {
+                    commit('ADD_STARSHIP', { starship: response.data, name: character.name })
+                  })
+              }
             })
           }
         })
@@ -68,14 +69,21 @@ export default new Vuex.Store({
           commit('SET_LOADING_STATE', false)
         }
       })
+        .catch(error => {
+          commit('SET_SYNC_ERROR', error.message)
+        })
+    },
+    syncStarShip ({ commit }, url, characterId) {
+
     }
   },
   getters: {
-    getCharacters: state => state.charactersData,
-    getSingleCharacter: state => id => state.charactersData.filter(character => character.id === +id)[0],
+    getCharacters: state => state.charactersData.filter((character, index) => index < state.pagination.currentPage * state.pagination.perPage && index >= (state.pagination.currentPage - 1) * state.pagination.perPage),
+    getSingleCharacter: state => name => state.charactersData.filter(character => character.name === name)[0],
     getPaginationSetting: state => key => state.pagination[key],
     getPaginationSettings: state => state.pagination,
-    isCharactersDataSyncing: state => state.charactersDataSyncing
+    isCharactersDataSyncing: state => state.charactersDataSyncing,
+    getSyncErrors: state => state.charactersDataSyncingErrors
   }
 
 })

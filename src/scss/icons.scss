@@ -1,0 +1,19 @@
+.icon {
+  &.icon-starship:before {
+    background-image: url(../../public/star-wars.svg);
+  }
+  &.icon-starship-w:before {
+    background-image: url(../../public/star-wars-w.svg);
+  }
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+  }
+  &.small:before {
+    height: 12px;
+    width: 12px;
+  }
+}

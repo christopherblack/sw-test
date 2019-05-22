@@ -10,16 +10,8 @@
   }
   .starships {
     list-style: none;
-    //list-style-image: url(../../public/star-wars.svg);
     li {
       margin: 10px 0;
-      &:before {
-        content: '';
-        display: inline-block;
-        height: 20px;
-        width: 20px;
-        background-image: url(../../public/star-wars.svg);
-      }
       .name {
         font-weight: bold;
         margin: 0 10px;
