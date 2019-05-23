@@ -1,4 +1,5 @@
-# sw-test
+# Star Wars API test Vue app
+Test app that asynchronously retrieves all data from Star Warts API and displays it with pagination. Key feauture is data syncronization that occurs only on app start, without any further requests to API.
 
 ## Project setup
 ```
