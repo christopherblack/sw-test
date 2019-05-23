@@ -19,8 +19,8 @@
           h3 {{ data.name }}
           p Родился в {{ data.birth_year }} году
           p Пол {{ data.gender | getGender }}
-          h4 Корабли персонажа
-            b-spinner.starships-loader(v-if="data.starships.length > 0 && !data.starshipsData" small)
+          h4(v-if="data.starships.length > 0") Корабли персонажа
+            b-spinner.starships-loader(v-if="!data.starshipsData" small)
             ul.starships(v-else)
               li.icon.icon-starship(v-for="starship in data.starshipsData")
                 span.name {{ starship.name }}
